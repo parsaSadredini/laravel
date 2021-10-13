@@ -1,11 +1,3 @@
 @component('mail::message')
-# Introduction
-wellcome new user
-
-@component('mail::button', ['url' => ''])
-Button Text
-@endcomponent
-
-Thanks,<br>
-{{ config('app.name') }}
+ Welcome new user to the test shop 
 @endcomponent

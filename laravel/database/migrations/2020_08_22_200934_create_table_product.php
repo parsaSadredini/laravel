@@ -18,12 +18,11 @@ class CreateTableProduct extends Migration
             $table->string("Name",100);
             $table->string("ImageUrl",250);
             $table->double("Price");
-            $table->bigInteger("OperatorId")->nullable();
-            $table->bigInteger("CategoryId");
+            $table->unsignedBigInteger("OperatorId")->nullable();
+            $table->unsignedBigInteger("CategoryId");
             $table->timestamps();
-
-            $table->foreign("CategoryId")->references("id")->on("tbl_category");
-            $table->foreign("OperatorId")->references("id")->on("tbl_user");
+            $table->foreign("CategoryId")->references("id")->on("tbl_category")->onUpdate("cascade")->onDelete('cascade');;
+            $table->foreign("OperatorId")->references("id")->on("users")->onUpdate("cascade")->onDelete('cascade');;
         });
     }
 

@@ -23,7 +23,7 @@ class CreateUsersTable extends Migration
             $table->rememberToken();
             $table->integer("Age")->nullable();
             $table->binary("Gender")->nullable();
-            $table->binary("IsActive")->default(1);    
+            $table->boolean("IsActive")->default(1);    
             $table->dateTime("LastDateLogin");
             $table->timestamps();
 

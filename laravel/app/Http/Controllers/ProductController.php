@@ -18,16 +18,19 @@ class ProductController extends Controller
 {
     public function get(){
         $products = Product::with(['Category'])->get();
-        // $products = Product::all();
         if(count($products) <= 0 )
             throw new ListEmptyException();
 
        return response()->json( new ApiResultWithData($products));
     }
 
+    // Rout model binding is also possible
+    // public function getById(Product $id)
     public function getById($id){
-        $product = Product::find($id);
+        $product = Product::where('id',$id)->firstOfFail();
         if($product == null )
+            //this is also possible
+            //abort(404 , "رکورد مورد نظر پیدا نشد")
             throw new NotFoundException();
 
         return response()->json( new ApiResultWithData($product));
@@ -69,6 +72,8 @@ class ProductController extends Controller
     private function performValidation($request){
         $validator = Validator::make($request->toArray(),Product::$validationRules);
         if($validator->fails())
+            //this is also possible
+            //abort(400 , "پارامتر های ارسالی معتبر نیستند")
             throw new ValidationException($validator);
     }
 
@@ -79,6 +84,8 @@ class ProductController extends Controller
             $imageUploaded->move(public_path('/images'),$path);
             return $path;
         }catch(Exception $exception){
+            //this is also possible
+            //abort(500 , "خطایی در سرور رخ داده است")
             throw new ApplicationException();
         }
         

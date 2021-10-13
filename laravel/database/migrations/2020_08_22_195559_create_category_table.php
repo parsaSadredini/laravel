@@ -16,9 +16,8 @@ class CreateCategoryTable extends Migration
         Schema::create('tbl_category', function (Blueprint $table) {
             $table->id();
             $table->string("title",50);
-            $table->bigInteger("IDCategory")->nullable();
+            $table->unsignedBigInteger("IDCategory")->nullable();
             $table->timestamps();
-
             $table->foreign("IDCategory")->references("id")->on("tbl_category");
         });
     }

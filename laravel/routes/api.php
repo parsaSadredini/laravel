@@ -1,5 +1,7 @@
 <?php
 
+use App\Events\NewMemberHasRegisteredEvent;
+use App\Member;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 /*
@@ -50,7 +52,8 @@ Route::get("shop/cats/products/{category}","MemberController@GetProductByCategor
 
 
 
-Route::post('/login',function(){
-    return "shit";
-});
+// Route::get('/login',function(){
+//     $member = Member::first();
+//     event(new NewMemberHasRegisteredEvent($member));
+// });
 Route::post('register','HomeController@register');

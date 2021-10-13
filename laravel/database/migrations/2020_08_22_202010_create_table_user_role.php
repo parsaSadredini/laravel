@@ -15,10 +15,10 @@ class CreateTableUserRole extends Migration
     {
         Schema::create('tbl_user_role', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger("UserId");
-            $table->bigInteger("RoleId");
-            $table->foreign("UserId")->references("id")->on("tbl_user");
-            $table->foreign("RoleId")->references("id")->on("tbl_role");
+            $table->unsignedBigInteger("UserId");
+            $table->unsignedBigInteger("RoleId");
+            $table->foreign("UserId")->references("id")->on("users")->onUpdate("cascade")->onDelete('cascade');
+            $table->foreign("RoleId")->references("id")->on("tbl_role")->onUpdate("cascade")->onDelete('cascade');
             $table->timestamps();
         });
     }

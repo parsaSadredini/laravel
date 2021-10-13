@@ -2,7 +2,10 @@
 
 namespace App\Providers;
 
+use App\Events\NewCustomHasRegisteredEvent;
+use App\Events\NewMemberHasRegisteredEvent;
 use App\Events\NewUserRegistered;
+use App\Listeners\WelcomeNewMemberListener;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -22,6 +25,9 @@ class EventServiceProvider extends ServiceProvider
         NewUserRegistered::class => [
             \App\Listeners\WelcomeNewUser::class,
             \App\Listeners\WelcomeNewUserBySmsListener::class
+        ],
+        NewMemberHasRegisteredEvent::class=>[
+            WelcomeNewMemberListener::class
         ]
     ];
 

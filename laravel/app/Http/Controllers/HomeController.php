@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\User;
+use Closure;
 use Illuminate\Support\Facades\Validator;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Symfony\Component\HttpFoundation\Exception\BadRequestException;
 
 class HomeController extends Controller
 {
@@ -15,8 +17,9 @@ class HomeController extends Controller
      *
      * @return void
      */
-    public function __construct()
+    public function __construct() 
     {
+        
     }
 
     /**
@@ -27,9 +30,11 @@ class HomeController extends Controller
     public function index()
     {
         return view('home');
+        
     }
 
     public function login(Request $request){
+        // sss and lll are hard coded just for test
         try{
             $http = new \GuzzleHttp\Client();
             $reponse = $http->post(config("services.passport.url"),
@@ -43,7 +48,9 @@ class HomeController extends Controller
             ]]);
             return $reponse->getBody();
         }catch(Exception $ex ){
-
+            //this is also possible
+            //abort(404 , "کاربری با این نام کاربری وجود ندارد")
+            throw new BadRequestException("کاربری با این نام کاربری وجود ندارد");
         }
     }
 
@@ -54,10 +61,11 @@ class HomeController extends Controller
             'email' => ['required', 'string', 'email', 'max:255','unique:users'],
             'password' => ['required', 'string', 'min:8'],
         ]);
-        // return $validation->messages();
+        
         if($validation->fails()){
             return $validation->errors()->messages();
         }
+
         return User::create([
             'name' => $request->name,
             'email' => $request->email,
@@ -67,6 +75,7 @@ class HomeController extends Controller
 
     public function logout()
     {
+        
         auth()->user()->tokens->each(function ($token, $key) {
             $token->delete();
         });
